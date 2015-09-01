@@ -14,7 +14,7 @@ def application(environ, start_response):
     data = {}
     for item in queryD.keys():
         data[item] = escape(queryD[item][0])
-    f = open("./dash_Proximity.csv", "a")
+    f = open("/var/log/hueControl/hue_Proximity.csv", "a")
     data['time'] = time.ctime()
     w = csv.writer(f)
     w.writerow(data.values())
