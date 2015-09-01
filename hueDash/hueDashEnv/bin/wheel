@@ -1,4 +1,4 @@
-#!/home/jkeane/bin/huePy/hueDashEnv/bin/python
+#!/home/jkeane/bin/hueControl/hueDash/hueDashEnv/bin/python
 
 # -*- coding: utf-8 -*-
 import re
