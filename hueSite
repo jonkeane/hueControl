@@ -35,7 +35,7 @@ server {
 
     location /2/b {
         include         uwsgi_params;
-        uwsgi_pass      unix:/home/jkeane/bin/huePy/hueDash.sock;
+        uwsgi_pass      unix:/home/jkeane/bin/hueControl/hueDash/hueDash.sock;
     }
 
     location /2/d {
@@ -43,9 +43,9 @@ server {
 		add_header Content-Type text/plain;
     }
 
-    location /hueProx/ {
+    location /hueProx {
         include         uwsgi_params;
-        uwsgi_pass      unix:/home/jkeane/bin/huePy/hueProx.sock;
+        uwsgi_pass      unix:/home/jkeane/bin/hueControl/hueProx/hueProx.sock;
     }
 
 }

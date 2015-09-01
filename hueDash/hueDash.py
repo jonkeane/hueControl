@@ -19,7 +19,7 @@ def application(environ, start_response):
 
     # lights = b.lights
 
-    f = open("/home/jkeane/bin/huePy/dash_request.txt", "w")
+    f = open("./dash_request.log", "w")
     # f.write(str(body)+"\n")
 
     f.write("id: "+id+"\n")
