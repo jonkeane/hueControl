@@ -111,21 +111,24 @@ if [ $maccurrent3 -ge 1 ]; then
 	pres3=1
 fi
 
+#grab the previous connected number for reporting.
+connectedPrev=$connected
+
 # Total up the number of devices connected.
 connected=$(($pres1 + $pres2 + $pres3))
 
 # Look for a change in status from the old known to the current status.
 # If it changed, if the new state is 0 or 2: if the old state was 1, and the new state is 2 ignore the change, otherwise update.
 if [ "$macconnected1" -ne "$maccurrent1" ] && [ "$maccurrent1" -ne 1 ] && !( [ "$maccurrent1" -eq 2 ] && [ "$macconnected1" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice1&state=$maccurrent1&devices=$connected"
+	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice1&state=$maccurrent1&devices=$connected&devicesPrev=$connectedPrev"
     echo "$(date) $macdevice1 status: $maccurrent1 timeout: $timeout1 State changed"
 fi
 if [ "$macconnected2" -ne "$maccurrent2" ] && [ "$maccurrent2" -ne 1 ] && !( [ "$maccurrent2" -eq 2 ] && [ "$macconnected2" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice2&state=$maccurrent2&devices=$connected"
+	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice2&state=$maccurrent2&devices=$connected&devicesPrev=$connectedPrev"
     echo "$(date) $macdevice2 status: $maccurrent2 timeout: $timeout2 State changed"
 fi
 if [ "$macconnected3" -ne "$maccurrent3" ] && [ "$maccurrent3" -ne 1 ] && !( [ "$maccurrent3" -eq 2 ] && [ "$macconnected3" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice3&state=$maccurrent3&devices=$connected"
+	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice3&state=$maccurrent3&devices=$connected&devicesPrev=$connectedPrev"
     echo "$(date) $macdevice3 status: $maccurrent3 timeout: $timeout3 State changed"
 fi
 
