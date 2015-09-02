@@ -24,7 +24,7 @@ def application(environ, start_response):
     b = phue.Bridge('hueBridge')
     # If the app is not registered and the button is not pressed, press the button and call connect() (this only needs to be run a single time)
     b.connect()
-    if data['state'] == '2' and float(data['devices']) >= 1 :
+    if data['state'] == '2' and float(data['devices']) >= 1 and float(data['devicesPrev']) <= 0 :
         b.set_light("Front door", 'on', True)
         b.set_light("Front door", 'bri', 254)
         b.set_light("Front door", 'sat', 0)
