@@ -6,12 +6,11 @@
 # MAC address of each device to watch. Don't leave blank.
 # For security purposes, if your router requires a password, even if someone could clone the MAC of your
 # phone, they would still require the password of your network to link to your router.
-# Updated 3/29/13 by Xathros
+# Adapted to work with bourne and go to an internal webserver Original by Xathros
 
-macdevice1="70:3E:AC:11:8D:CD" # jon's phone
-macdevice2="B8:E8:56:EF:97:49" # ted's phone
-macdevice3="D8:96:95:0C:AF:EB" # keith's phone
-macdevice4="6C:40:08:9C:CB:DE" # jon's computer
+macdevice1="00:00:00:00:00:00" #
+macdevice2="00:00:00:00:00:00" #
+macdevice3="00:00:00:00:00:00" #
 
 #Sleep delays to prevent constant querying of the arp table
 delay_occupied=15
@@ -41,10 +40,10 @@ timeout3=0
 
 connected=-1
 
-# total number of currently conencted devices.   
+# total number of currently conencted devices.
 currentconnected=0
 
-# Main loop.  
+# Main loop.
 while true; do
 
 # reset current status to 0. Two variables are used for each device.  The past known status and the current
@@ -66,7 +65,7 @@ else
 	   timeout1=$(($timeout1 - 1 ))
    else
 	   maccurrent1=0
-	   timeout1=-10 
+	   timeout1=-10
    fi
 fi
 
@@ -80,7 +79,7 @@ else
 	   timeout2=$(($timeout2 - 1 ))
    else
 	   maccurrent2=0
-	   timeout2=-10 
+	   timeout2=-10
    fi
 fi
 
@@ -94,7 +93,7 @@ else
 	   timeout3=$(($timeout3 - 1 ))
    else
 	   maccurrent3=0
-	   timeout3=-10 
+	   timeout3=-10
    fi
 fi
 
@@ -119,17 +118,17 @@ connected=$(($pres1 + $pres2 + $pres3))
 
 # Look for a change in status from the old known to the current status.
 # If it changed, if the new state is 0 or 2: if the old state was 1, and the new state is 2 ignore the change, otherwise update.
-if [ "$macconnected1" -ne "$maccurrent1" ] && [ "$maccurrent1" -ne 1 ] && !( [ "$maccurrent1" -eq 2 ] && [ "$macconnected1" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice1&state=$maccurrent1&devices=$connected&devicesPrev=$connectedPrev"
-    echo "$(date) $macdevice1 status: $maccurrent1 timeout: $timeout1 State changed"
+if [ "$macconnected1" -ne "$maccurrent1" ] && [ "$maccurrent1" -ne 1 ] && !( [ "$maccurrent1" -eq 2 ] && [ "$macconnected1" -eq 1 ] ); then
+	wget -q "http://[ip address of server]/hueProx?mac=$macdevice1&state=$maccurrent1&devices=$connected&devicesPrev=$connectedPrev"
+    # echo "$(date) $macdevice1 status: $maccurrent1 timeout: $timeout1 State changed"
 fi
-if [ "$macconnected2" -ne "$maccurrent2" ] && [ "$maccurrent2" -ne 1 ] && !( [ "$maccurrent2" -eq 2 ] && [ "$macconnected2" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice2&state=$maccurrent2&devices=$connected&devicesPrev=$connectedPrev"
-    echo "$(date) $macdevice2 status: $maccurrent2 timeout: $timeout2 State changed"
+if [ "$macconnected2" -ne "$maccurrent2" ] && [ "$maccurrent2" -ne 1 ] && !( [ "$maccurrent2" -eq 2 ] && [ "$macconnected2" -eq 1 ] ); then
+	wget -q "http://[ip address of server]/hueProx?mac=$macdevice2&state=$maccurrent2&devices=$connected&devicesPrev=$connectedPrev"
+    # echo "$(date) $macdevice2 status: $maccurrent2 timeout: $timeout2 State changed"
 fi
-if [ "$macconnected3" -ne "$maccurrent3" ] && [ "$maccurrent3" -ne 1 ] && !( [ "$maccurrent3" -eq 2 ] && [ "$macconnected3" -eq 1 ] ); then 
-	wget -q "http://bet.trojka.us/hueProx?mac=$macdevice3&state=$maccurrent3&devices=$connected&devicesPrev=$connectedPrev"
-    echo "$(date) $macdevice3 status: $maccurrent3 timeout: $timeout3 State changed"
+if [ "$macconnected3" -ne "$maccurrent3" ] && [ "$maccurrent3" -ne 1 ] && !( [ "$maccurrent3" -eq 2 ] && [ "$macconnected3" -eq 1 ] ); then
+	wget -q "http://[ip address of server]/hueProx?mac=$macdevice3&state=$maccurrent3&devices=$connected&devicesPrev=$connectedPrev"
+    # echo "$(date) $macdevice3 status: $maccurrent3 timeout: $timeout3 State changed"
 fi
 
 # Update the known status from the current.  Ready for the next loop.
@@ -144,5 +143,5 @@ if [ $connected -gt 0 ]; then
 else
    sleep $delay_unoccupied
 fi
-   
+
 done  #end of main loop

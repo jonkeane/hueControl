@@ -56,4 +56,5 @@ docs/_build/
 # PyBuilder
 target/
 
+# For apple file system zanieness
 .AppleDouble

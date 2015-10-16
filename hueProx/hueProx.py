@@ -20,6 +20,19 @@ def application(environ, start_response):
     w.writerow(data.values())
     f.close()
 
+    f = open("/var/log/hueControl/hue_Proximity.log", "w")
+    f.write(str(data))
+    f.close()
+
+    # Test for timing of arrivals.
+    b = phue.Bridge('hueBridge')
+    # If the app is not registered and the button is not pressed, press the button and call connect() (this only needs to be run a single time)
+    b.connect()
+    if data['state'] == '2' and float(data['devices']) >= 1 and float(data['devicesPrev']) <= 0 :
+        b.set_light("Front door", 'on', True)
+        b.set_light("Front door", 'bri', 254)
+        b.set_light("Front door", 'sat', 0)
+
 
     start_response('200 OK', [('Content-Type', 'text/html')])
     return ["<h1>This should be sent to the router!</h1>"]

@@ -2,6 +2,11 @@
 import json, time
 import phue
 
+#### Grab dash button connections and make hue changes based on them.
+# This is adapted and heavily based on http://blog.nemik.net/2015/08/dash-button-corral/
+# The dns forwarding commands are not yet documented, but follow the above blog for that.
+# to do: separate ids and events to a separate (user defined?) file
+
 def application(environ, start_response):
     try:
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))
