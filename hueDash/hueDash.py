@@ -72,7 +72,9 @@ def application(environ, start_response):
 
     if id == "G030G00553170740":
         lights = {"Iris bedroom": None,
-                  "Bedroom hall": None}
+                  "Bedroom hall": None,
+                  "Bed lamp east": None,
+                  "Bed lamp west": None}
 
         # currently bright isn't used here, maybe thi shsould be separated out to a generic function
         for light in lights:
@@ -87,10 +89,13 @@ def application(environ, start_response):
         numOff = sum(lightState == "off" for lightState in lights.values())
 
         f.write(str(lights)+"\n")
-        if numOff >= 2:
-            # if both are off, only turn on the iris.
-            b.set_light("Iris bedroom", 'on', True)
-            b.set_light("Iris bedroom", 'bri', 103)
+        if numOff >= 4:
+            # if all are off, only turn on the iris.
+            subLights = {"Iris bedroom": None,
+                      "Bed lamp east": None,
+                      "Bed lamp west": None}
+            b.set_light(subLights, 'on', True)
+            b.set_light(subLights, 'bri', 103)
             # b.set_light(lights, 'sat', 0)
         else:
             # if either are on, turn both off.
