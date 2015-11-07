@@ -35,7 +35,7 @@ def application(environ, start_response):
                   "Living southwest": None,
                   "Living northwest": None,
                   "Living southeast": None,
-                  "Front door": None}
+                  "Front door light": None}
 
         for light in lights:
             if b.get_light(light, 'on') == True and b.get_light(light, 'bri') > 100:
@@ -71,8 +71,8 @@ def application(environ, start_response):
                 # b.set_light(lights, 'bri', 1)
 
     if id == "G030G00553170740":
-        lights = {"Iris bedroom": None,
-                  "Bedroom hall": None,
+        lights = {"Bedroom iris": None,
+                  "Bedroom hall light": None,
                   "Bed lamp east": None,
                   "Bed lamp west": None}
 
